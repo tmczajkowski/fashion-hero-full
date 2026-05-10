@@ -146,13 +146,13 @@ export function FitCopyAudit() {
           <li className="flex items-start gap-2">
             <span className="text-blue-600 font-bold">1.</span>
             <span>
-              Add sizing guidance: "True to size, fits snug through thighs"
+              Add sizing guidance: &quot;True to size, fits snug through thighs&quot;
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-blue-600 font-bold">2.</span>
             <span>
-              Include style keywords: "perfect for casual weekends" or "work-friendly"
+              Include style keywords: &quot;perfect for casual weekends&quot; or &quot;work-friendly&quot;
             </span>
           </li>
           <li className="flex items-start gap-2">

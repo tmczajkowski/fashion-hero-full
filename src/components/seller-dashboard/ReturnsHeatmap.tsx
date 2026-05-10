@@ -19,6 +19,21 @@ function getHeatmapColor(returnRate: number) {
   return "bg-red-100 text-red-900"; // >35% red
 }
 
+interface SortIconProps {
+  field: SortField;
+  sortField: SortField;
+  sortOrder: SortOrder;
+}
+
+function SortIcon({ field, sortField, sortOrder }: SortIconProps) {
+  if (sortField !== field) return null;
+  return sortOrder === "desc" ? (
+    <ChevronDown className="w-4 h-4" />
+  ) : (
+    <ChevronUp className="w-4 h-4" />
+  );
+}
+
 export function ReturnsHeatmap({ skus }: ReturnsHeatmapProps) {
   const [sortField, setSortField] = useState<SortField>("loss_pln");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
@@ -104,15 +119,6 @@ export function ReturnsHeatmap({ skus }: ReturnsHeatmapProps) {
     document.body.removeChild(link);
   };
 
-  const SortIcon = ({ field }: { field: SortField }) => {
-    if (sortField !== field) return null;
-    return sortOrder === "desc" ? (
-      <ChevronDown className="w-4 h-4" />
-    ) : (
-      <ChevronUp className="w-4 h-4" />
-    );
-  };
-
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between mb-6">
@@ -161,7 +167,7 @@ export function ReturnsHeatmap({ skus }: ReturnsHeatmapProps) {
                   className="flex items-center gap-2 ml-auto hover:text-teal-600"
                 >
                   Return %
-                  <SortIcon field="return_rate" />
+                  <SortIcon field="return_rate" sortField={sortField} sortOrder={sortOrder} />
                 </button>
               </th>
               <th className="text-right py-3 px-4 font-semibold text-slate-700">
@@ -170,7 +176,7 @@ export function ReturnsHeatmap({ skus }: ReturnsHeatmapProps) {
                   className="flex items-center gap-2 ml-auto hover:text-teal-600"
                 >
                   Orders
-                  <SortIcon field="orders" />
+                  <SortIcon field="orders" sortField={sortField} sortOrder={sortOrder} />
                 </button>
               </th>
               <th className="text-right py-3 px-4 font-semibold text-slate-700">
@@ -179,7 +185,7 @@ export function ReturnsHeatmap({ skus }: ReturnsHeatmapProps) {
                   className="flex items-center gap-2 ml-auto hover:text-teal-600"
                 >
                   Loss (PLN)
-                  <SortIcon field="loss_pln" />
+                  <SortIcon field="loss_pln" sortField={sortField} sortOrder={sortOrder} />
                 </button>
               </th>
               <th className="text-left py-3 px-4 font-semibold text-slate-700">

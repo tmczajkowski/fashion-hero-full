@@ -15,7 +15,7 @@ import { PhotoQualityScorer } from "@/components/seller-dashboard/PhotoQualitySc
 import { FitTableGenerator } from "@/components/seller-dashboard/FitTableGenerator";
 import { ProPhotoBooking } from "@/components/seller-dashboard/ProPhotoBooking";
 import { Recommendation } from "@/data/mock-recommendations";
-import { SellerAnalytics, HealthScoreData, SKUPerformance } from "@/types/analytics";
+import { SellerAnalytics, HealthScoreData, SKUPerformance, ReasonBreakdown, DailyMetric } from "@/types/analytics";
 
 interface DeepDiveData {
   sku_id: string;
@@ -25,8 +25,9 @@ interface DeepDiveData {
   return_count: number;
   order_count: number;
   total_loss_pln: number;
-  reason_breakdown: any[];
-  trend_90d: any[];
+  margin_per_unit: number;
+  reason_breakdown: ReasonBreakdown[];
+  trend_90d: DailyMetric[];
   recommendations: Recommendation[];
   top_reason: string;
 }
@@ -150,7 +151,7 @@ export default function SellerDashboard() {
 
             {deepDiveData && !deepDiveLoading && (
               <SKUDeepDiveCard
-                sku={deepDiveData as any}
+                sku={deepDiveData as SKUPerformance}
                 recommendations={deepDiveData.recommendations}
               />
             )}

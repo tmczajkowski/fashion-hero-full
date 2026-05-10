@@ -6,7 +6,7 @@ export function HeroSection() {
           Które SKU tracą Ci pieniądze?
         </h1>
         <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
-          Dashboard dla seller'ów, który pokazuje dokładnie które produkty generują zwroty — zanim stracisz marżę.
+          Dashboard dla seller&apos;ów, który pokazuje dokładnie które produkty generują zwroty — zanim stracisz marżę.
         </p>
       </div>
     </section>

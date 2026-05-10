@@ -196,7 +196,7 @@ export function SignupForm() {
             </button>
 
             <p className="text-xs text-slate-500 text-center">
-              Twoje dane będą bezpieczne. Nie będziemy ich sprzedawać ani spam'ować.
+              Twoje dane będą bezpieczne. Nie będziemy ich sprzedawać ani spam&apos;ować.
             </p>
           </form>
         </Card>

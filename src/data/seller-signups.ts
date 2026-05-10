@@ -1,6 +1,6 @@
 import { SellerSignup } from "@/types";
 
-let signups: SellerSignup[] = [];
+const signups: SellerSignup[] = [];
 
 export function addSignup(signup: Omit<SellerSignup, "id" | "createdAt">): SellerSignup {
   const newSignup: SellerSignup = {

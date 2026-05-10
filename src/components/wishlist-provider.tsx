@@ -37,11 +37,7 @@ export function useWishlist() {
 }
 
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
-  const [wishlistItems, setWishlistItems] = useState<string[]>([]);
-
-  useEffect(() => {
-    setWishlistItems(loadWishlist());
-  }, []);
+  const [wishlistItems, setWishlistItems] = useState<string[]>(loadWishlist);
 
   const toggleWishlist = useCallback((productId: string) => {
     setWishlistItems((prev) => {

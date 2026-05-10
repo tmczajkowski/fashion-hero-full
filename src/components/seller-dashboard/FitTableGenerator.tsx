@@ -148,7 +148,7 @@ export function FitTableGenerator() {
         <ul className="space-y-2 text-sm text-slate-700">
           <li className="flex items-start gap-2">
             <span className="text-green-600 font-bold">✓</span>
-            <span>Include fit notes: "runs small" or "relaxed fit" alongside measurements</span>
+            <span>Include fit notes: &quot;runs small&quot; or &quot;relaxed fit&quot; alongside measurements</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-green-600 font-bold">✓</span>

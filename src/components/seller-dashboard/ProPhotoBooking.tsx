@@ -118,7 +118,7 @@ export function ProPhotoBooking() {
 
       <Card className="p-6">
         <h3 className="text-lg font-semibold text-slate-900 mb-4">
-          What's Included
+          What&apos;s Included
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex gap-3">
@@ -152,12 +152,12 @@ export function ProPhotoBooking() {
         <div className="space-y-3">
           <div className="p-3 bg-white rounded-lg border border-slate-200">
             <div className="flex items-center justify-between mb-2">
-              <div className="font-medium text-slate-900">Sarah's Eco Basics</div>
+              <div className="font-medium text-slate-900">Sarah&apos;s Eco Basics</div>
               <div className="text-sm text-slate-600">2 weeks ago</div>
             </div>
             <div className="flex items-center gap-1 text-sm text-slate-700">
               <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-              <span>"Photos exceeded expectations! Sales up 34%"</span>
+              <span>&quot;Photos exceeded expectations! Sales up 34%&quot;</span>
             </div>
           </div>
 
@@ -170,7 +170,7 @@ export function ProPhotoBooking() {
             </div>
             <div className="flex items-center gap-1 text-sm text-slate-700">
               <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-              <span>"Professional and efficient. Highly recommend"</span>
+              <span>&quot;Professional and efficient. Highly recommend&quot;</span>
             </div>
           </div>
         </div>
@@ -185,7 +185,7 @@ export function ProPhotoBooking() {
             </h3>
             <p className="text-sm text-slate-700 mb-4">
               Professional photos are shown to have 24-35% higher conversion
-              rates. Let's book a session today.
+              rates. Let&apos;s book a session today.
             </p>
             <a
               href="https://example.com/book-photos"

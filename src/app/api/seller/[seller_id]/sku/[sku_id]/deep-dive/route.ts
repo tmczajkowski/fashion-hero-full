@@ -46,6 +46,7 @@ export async function GET(
         return_count: sku.return_count,
         order_count: sku.order_count,
         total_loss_pln: sku.total_loss_pln,
+        margin_per_unit: sku.margin_per_unit,
         reason_breakdown: sku.reason_breakdown,
         trend_90d: sku.trend_90d,
         recommendations,

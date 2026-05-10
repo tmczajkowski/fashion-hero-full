@@ -27,7 +27,7 @@ export async function submitSignup(payload: SignupPayload): Promise<SignupRespon
     });
 
     return await response.json();
-  } catch (error) {
+  } catch (_error) {
     return {
       success: false,
       message: "Błąd sieci. Spróbuj ponownie.",
