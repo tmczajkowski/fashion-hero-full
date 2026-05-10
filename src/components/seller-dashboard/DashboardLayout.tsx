@@ -7,6 +7,7 @@ interface DashboardLayoutProps {
   children: React.ReactNode;
   activeTab: string;
   onTabChange: (tab: string) => void;
+  header?: React.ReactNode;
 }
 
 const tabs = [
@@ -20,6 +21,7 @@ export function DashboardLayout({
   children,
   activeTab,
   onTabChange,
+  header,
 }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -67,28 +69,44 @@ export function DashboardLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="md:hidden p-2 hover:bg-slate-100 rounded-lg"
-          >
-            {sidebarOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
-
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-2xl font-bold text-slate-900">
-              Seller Dashboard
-            </h1>
+        {header ? (
+          <div className="flex items-center gap-4 bg-white border-b border-slate-200">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="md:hidden p-2 hover:bg-slate-100 rounded-lg ml-4"
+            >
+              {sidebarOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+            <div className="flex-1">{header}</div>
           </div>
+        ) : (
+          <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="md:hidden p-2 hover:bg-slate-100 rounded-lg"
+            >
+              {sidebarOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
 
-          <div className="text-right text-sm text-slate-600">
-            <p className="font-medium">Seller Tools</p>
-          </div>
-        </header>
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-2xl font-bold text-slate-900">
+                Seller Dashboard
+              </h1>
+            </div>
+
+            <div className="text-right text-sm text-slate-600">
+              <p className="font-medium">Seller Tools</p>
+            </div>
+          </header>
+        )}
 
         {/* Content Area */}
         <main className="flex-1 overflow-auto">

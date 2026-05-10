@@ -64,6 +64,46 @@ export function ReturnsHeatmap({ skus }: ReturnsHeatmapProps) {
     }
   };
 
+  const exportToCSV = () => {
+    const headers = [
+      "SKU",
+      "Product Name",
+      "Category",
+      "Return %",
+      "Orders",
+      "Loss (PLN)",
+      "Top Reason",
+    ];
+
+    const rows = sortedSKUs.map((sku) => [
+      sku.sku_id,
+      sku.product_name,
+      sku.category,
+      `${(sku.return_rate * 100).toFixed(1)}%`,
+      sku.order_count,
+      sku.total_loss_pln.toLocaleString("pl-PL"),
+      sku.top_reason,
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+
+    const date = new Date().toISOString().split("T")[0];
+    link.setAttribute("href", url);
+    link.setAttribute("download", `returns-heatmap-${date}.csv`);
+    link.style.visibility = "hidden";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const SortIcon = ({ field }: { field: SortField }) => {
     if (sortField !== field) return null;
     return sortOrder === "desc" ? (
@@ -78,20 +118,29 @@ export function ReturnsHeatmap({ skus }: ReturnsHeatmapProps) {
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-slate-900">Returns Heatmap</h3>
 
-        {/* Category Filter */}
-        <div className="flex items-center gap-2">
-          <label className="text-sm text-slate-600">Category:</label>
-          <select
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-3 py-1 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600"
+        {/* Category Filter & Export */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <label className="text-sm text-slate-600">Category:</label>
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="px-3 py-1 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600"
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat === "all" ? "All Categories" : cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            onClick={exportToCSV}
+            className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors"
           >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat === "all" ? "All Categories" : cat}
-              </option>
-            ))}
-          </select>
+            Export CSV
+          </button>
         </div>
       </div>
 

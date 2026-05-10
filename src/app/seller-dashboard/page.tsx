@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/seller-dashboard/DashboardLayout";
+import { Header } from "@/components/seller-dashboard/Header";
 import { HealthScoreCard } from "@/components/seller-dashboard/HealthScoreCard";
+import { QuickStats } from "@/components/seller-dashboard/QuickStats";
 import { ReturnsHeatmap } from "@/components/seller-dashboard/ReturnsHeatmap";
+import { ReturnsBarChart } from "@/components/charts/ReturnsBarChart";
 import { SellerAnalytics, HealthScoreData } from "@/types/analytics";
 
 export default function SellerDashboard() {
@@ -53,36 +56,17 @@ export default function SellerDashboard() {
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <HealthScoreCard data={healthScore} />
-              <div className="bg-white rounded-lg p-6 border border-slate-200">
-                <h3 className="text-lg font-semibold text-slate-900 mb-6">
-                  Quick Stats
-                </h3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm text-slate-600">Miesięczny GMV</p>
-                    <p className="text-2xl font-bold text-slate-900">
-                      {seller.monthly_gmv.toLocaleString("pl-PL")} zł
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-600">Stopa zwrotów</p>
-                    <p className="text-2xl font-bold text-slate-900">
-                      {(seller.return_rate * 100).toFixed(1)}%
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-600">Total Loss (30d)</p>
-                    <p className="text-2xl font-bold text-red-600">
-                      {seller.skus
-                        .reduce((sum, sku) => sum + sku.total_loss_pln, 0)
-                        .toLocaleString("pl-PL")}{" "}
-                      zł
-                    </p>
-                  </div>
-                </div>
+              <QuickStats seller={seller} />
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <ReturnsHeatmap skus={seller.skus} />
+              </div>
+              <div className="lg:col-span-1">
+                <ReturnsBarChart skus={seller.skus} metric="loss_pln" />
               </div>
             </div>
-            <ReturnsHeatmap skus={seller.skus} />
           </div>
         );
 
@@ -135,7 +119,11 @@ export default function SellerDashboard() {
   };
 
   return (
-    <DashboardLayout activeTab={activeTab} onTabChange={setActiveTab}>
+    <DashboardLayout
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      header={<Header seller={seller} healthScore={healthScore} />}
+    >
       {renderContent()}
     </DashboardLayout>
   );
