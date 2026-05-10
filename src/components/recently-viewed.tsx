@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { Product } from "@/types";
 import { products as allProducts } from "@/data/products";
 import { ProductCard } from "./product-card";
@@ -34,15 +34,13 @@ export function trackRecentlyViewed(productId: string) {
 }
 
 export function RecentlyViewed({ currentProductId }: { currentProductId: string }) {
-  const [recentProducts, setRecentProducts] = useState<Product[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const recentProducts = useMemo(() => {
     const ids = loadRecentlyViewed().filter((id) => id !== currentProductId);
-    const resolved = ids
+    return ids
       .map((id) => allProducts.find((p) => p.id === id))
       .filter((p): p is Product => !!p);
-    setRecentProducts(resolved);
   }, [currentProductId]);
 
   function scroll(direction: "left" | "right") {

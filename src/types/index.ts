@@ -1,4 +1,4 @@
-export type { Seller } from "./seller";
+export type { Seller, SellerSignup } from "./seller";
 
 export interface ProductColor {
   name: string;

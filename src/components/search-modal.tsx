@@ -29,7 +29,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       inputRef.current?.focus();
       document.body.style.overflow = "hidden";
     } else {
-      setQuery("");
       document.body.style.overflow = "";
     }
     return () => {
