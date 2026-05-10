@@ -117,7 +117,7 @@ export function Footer() {
             </span>
           </div>
           <p className="text-xs text-white/30">
-            &copy; {new Date().getFullYear()} FashionHero, Inc. All Rights Reserved.
+            &copy; 2026 FashionHero, Inc. All Rights Reserved.
           </p>
         </div>
       </div>
