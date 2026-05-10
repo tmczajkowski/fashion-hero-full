@@ -83,6 +83,7 @@ export function ReturnsBarChart({
               borderRadius: "8px",
             }}
             formatter={(value) => {
+              if (typeof value !== "number") return value;
               if (metric === "loss_pln") return `${value.toLocaleString("pl-PL")} zł`;
               if (metric === "return_rate") return `${value.toFixed(1)}%`;
               return value;
