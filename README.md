@@ -83,6 +83,30 @@ Edit **`TARGET.md`** before cloning:
 - **Scope** — what's in/out of scope
 - **Customization plans** — modifications to apply after the base clone
 
+## Pricing Report (demo)
+
+Demo feature dodany w ramach AI Product Heroes — w panelu klienta pojawia się banner promujący subskrypcję raportu cen konkurencji (49 PLN/mies). Pełny flow: banner → landing → fake checkout → widok raportu z 25 mock SKU, alertami, historią 4 tygodni, listą konkurentów i mock eksportem (PDF placeholder + realny CSV).
+
+- **Live demo:** https://<your-vercel-url> _(podlinkowane po deployu)_
+- **Origin discovery:** [fake door prototype](https://competitor-price-report-fd-v2.lovable.app)
+- **Spec:** [`docs/superpowers/specs/2026-05-10-pricing-report-demo-design.md`](docs/superpowers/specs/2026-05-10-pricing-report-demo-design.md)
+
+### Trasy
+- `/pricing-report` — landing publiczny
+- `/pricing-report/checkout` — fake checkout
+- `/pricing-report/success` — ekran sukcesu
+- `/account/pricing-report` — widok raportu (wymaga „aktywnej subskrypcji" w localStorage)
+
+### Status
+Demo, bez backendu. Stan subskrypcji w `localStorage` (`pricing-report:subscription`). Mock dane statyczne w `src/lib/pricing-report/data.ts`. Eksport PDF to statyczny placeholder, CSV — realny.
+
+### Lokalnie
+```bash
+npm install
+npm run dev
+```
+Otwórz `http://localhost:3000/account` (zalogowany użytkownik), klik banner, przejdź flow.
+
 ## License
 
 MIT
