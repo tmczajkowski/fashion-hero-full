@@ -39,6 +39,18 @@ export default function AccountPage() {
         Welcome back to your FashionHero account.
       </p>
 
+      <section className="mb-10 rounded-xl border border-black/10 bg-[#f7f8fb] p-4">
+        <h2 className="text-[12px] font-medium uppercase tracking-[0.8px] text-charcoal mb-2">
+          Seller Prototype
+        </h2>
+        <p className="text-[13px] text-charcoal/80 mb-3">
+          Test the Polish cold-start boost flow for promoting up to 3 products.
+        </p>
+        <Link href="/sprzedawca/promocje" className="inline-flex items-center text-[12px] underline text-charcoal hover:text-black">
+          Open seller promotion panel
+        </Link>
+      </section>
+
       {/* Order History */}
       <section className="mb-10">
         <h2 className="text-[12px] font-medium uppercase tracking-[0.8px] text-charcoal mb-4 pb-2 border-b border-black/10">
