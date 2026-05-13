@@ -33,14 +33,14 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* FashionHero custom colors */
-  --color-cream: #ece9e2;
-  --color-cream-dark: #e0dad0;
-  --color-cream-light: #f5f4f1;
-  --color-charcoal: #212121;
-  --color-charcoal-light: #333333;
-  --color-warm-gray: #6b6b6b;
-  --color-footer-bg: #212121;
+  /* FashionHero custom colors — referenced via :root/.dark so they flip in dark mode */
+  --color-cream: var(--cream);
+  --color-cream-dark: var(--cream-dark);
+  --color-cream-light: var(--cream-light);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-light: var(--charcoal-light);
+  --color-warm-gray: var(--warm-gray);
+  --color-footer-bg: var(--footer-bg);
 }
 
 :root {
@@ -64,6 +64,77 @@
   --input: #cdcdcd;
   --ring: #212121;
   --radius: 0.375rem;
+
+  /* FashionHero palette — light mode base values */
+  --cream: #ece9e2;
+  --cream-dark: #e0dad0;
+  --cream-light: #f5f4f1;
+  --charcoal: #212121;
+  --charcoal-light: #333333;
+  --warm-gray: #6b6b6b;
+  --footer-bg: #212121;
+}
+
+.dark {
+  --background: #161614;
+  --foreground: #f5f4f1;
+  --card: #1f1f1d;
+  --card-foreground: #f5f4f1;
+  --popover: #1f1f1d;
+  --popover-foreground: #f5f4f1;
+  --primary: #f5f4f1;
+  --primary-foreground: #161614;
+  --secondary: #2a2a28;
+  --secondary-foreground: #f5f4f1;
+  --muted: #2a2a28;
+  --muted-foreground: #a0a09d;
+  --accent: #2a2a28;
+  --accent-foreground: #f5f4f1;
+  --destructive: #ff6464;
+  --border: #2f2f2c;
+  --input: #2f2f2c;
+  --ring: #f5f4f1;
+
+  /* FashionHero palette flipped — makes text-charcoal/text-warm-gray/bg-cream-* readable in dark */
+  --cream: #161614;
+  --cream-dark: #2a2a28;
+  --cream-light: #1f1f1d;
+  --charcoal: #f5f4f1;
+  --charcoal-light: #ece9e2;
+  --warm-gray: #a0a09d;
+  /* footer-bg intentionally stays dark in both modes */
+}
+
+/* Keep elements styled with bg-charcoal staying dark in dark mode
+   so their text-white labels remain readable (buttons, badges, announcement bar) */
+.dark .bg-charcoal {
+  background-color: #2a2a28;
+}
+.dark .bg-charcoal-light,
+.dark .hover\:bg-charcoal-light:hover {
+  background-color: #3a3a37;
+}
+.dark .hover\:bg-charcoal:hover {
+  background-color: #2a2a28;
+}
+
+/* Surfaces hardcoded to white (modals, mega-menu panel, product card badges) */
+.dark .bg-white {
+  background-color: var(--card);
+}
+.dark .hover\:bg-white:hover {
+  background-color: var(--card);
+}
+.dark .bg-white\/90,
+.dark .hover\:bg-white\/90:hover {
+  background-color: rgb(31 31 29 / 0.9);
+}
+
+/* Hardcoded black borders → semantic border */
+.dark .border-black\/5,
+.dark .border-black\/10,
+.dark .border-black\/15 {
+  border-color: var(--border);
 }
 
 @layer base {

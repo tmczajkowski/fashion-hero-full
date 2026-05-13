@@ -9,6 +9,7 @@ export const sellers: Seller[] = [
     logo: "/images/sellers/urban-edge.svg",
     joinedYear: 2021,
     rating: 4.6,
+    verified: true,
   },
   {
     id: "s2",
@@ -18,6 +19,7 @@ export const sellers: Seller[] = [
     logo: "/images/sellers/bella-donna.svg",
     joinedYear: 2021,
     rating: 4.7,
+    verified: true,
   },
   {
     id: "s3",
@@ -36,6 +38,7 @@ export const sellers: Seller[] = [
     logo: "/images/sellers/modna-szafa.svg",
     joinedYear: 2022,
     rating: 4.8,
+    verified: true,
   },
   {
     id: "s5",
@@ -54,6 +57,7 @@ export const sellers: Seller[] = [
     logo: "/images/sellers/eco-threads.svg",
     joinedYear: 2023,
     rating: 4.9,
+    verified: true,
   },
   {
     id: "s7",

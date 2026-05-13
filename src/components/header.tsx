@@ -7,6 +7,7 @@ import { SearchIcon, UserIcon, CartIcon, MenuIcon, CloseIcon, HeartIcon } from "
 import { SearchModal } from "./search-modal";
 import { MegaMenuNav, MobileMegaMenuContent } from "./mega-menu";
 import { useAuth } from "./auth-provider";
+import { ThemeToggle } from "./theme-toggle";
 
 const secondaryLinks = [
   { label: "About", href: "/about" },
@@ -24,7 +25,7 @@ export function Header({ onCartOpen, cartCount = 0, wishlistCount = 0 }: HeaderP
   const { user } = useAuth();
 
   return (
-    <header className="bg-white sticky top-0 z-50 border-b border-black/5">
+    <header className="bg-card text-card-foreground sticky top-0 z-50 border-b border-border">
       <nav className="mx-auto flex h-14 items-center px-4 lg:px-8 relative">
         {/* Mobile menu button */}
         <button
@@ -56,6 +57,7 @@ export function Header({ onCartOpen, cartCount = 0, wishlistCount = 0 }: HeaderP
               {link.label}
             </Link>
           ))}
+          <ThemeToggle />
           <button
             aria-label="Search"
             className="p-1 hover:opacity-60 transition-opacity"

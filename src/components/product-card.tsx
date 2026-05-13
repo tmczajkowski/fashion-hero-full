@@ -117,9 +117,16 @@ export function ProductCard({ product, className }: ProductCardProps) {
               <span className="text-charcoal/60 hover:text-charcoal transition-colors">
                 {seller.name}
               </span>
-              {seller.rating >= 4.5 && (
-                <span className="inline-block ml-1 text-[9px] bg-charcoal/10 text-charcoal/70 px-1 py-0.5 rounded uppercase tracking-wide">
-                  Pro
+              {seller.verified && (
+                <span
+                  title="FashionHero Verified — sprzedawca z niskim return rate i wysokim NCM"
+                  className="inline-flex items-center gap-0.5 ml-1.5 text-[9px] bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded uppercase tracking-wide font-medium"
+                >
+                  <svg viewBox="0 0 16 16" fill="currentColor" className="w-2.5 h-2.5">
+                    <path d="M8 0 9.8 1.6l2.4-.3.6 2.3 2.1 1.2-1 2.2 1 2.2-2.1 1.2-.6 2.3-2.4-.3L8 16l-1.8-1.6-2.4.3-.6-2.3L1.1 11.2l1-2.2-1-2.2 2.1-1.2.6-2.3 2.4.3z" />
+                    <path d="m6.5 8.3 1 1 2.2-2.3" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Verified
                 </span>
               )}
             </p>
