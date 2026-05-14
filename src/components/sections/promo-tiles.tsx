@@ -4,7 +4,7 @@ import Image from "next/image";
 const promos = [
   {
     title: "Trail Collection",
-    gradient: "linear-gradient(170deg, #3d5a3d 0%, #5c7a5c 40%, #8a9a7a 100%)",
+    gradient: "linear-gradient(170deg, #ff0080 0%, #9d00ff 60%, #1a0033 100%)",
     image: "/images/products/product-3.jpg",
     links: [
       { label: "SHOP MEN", href: "/collections/mens" },
@@ -13,7 +13,7 @@ const promos = [
   },
   {
     title: "Everyday Essentials",
-    gradient: "linear-gradient(170deg, #6b5b4a 0%, #a89279 40%, #c4b59a 100%)",
+    gradient: "linear-gradient(170deg, #9d00ff 0%, #ff0080 50%, #39ff14 100%)",
     image: "/images/products/product-4.jpg",
     links: [
       { label: "SHOP MEN", href: "/collections/mens" },
@@ -22,7 +22,7 @@ const promos = [
   },
   {
     title: "Sale",
-    gradient: "linear-gradient(170deg, #9e4040 0%, #c06060 40%, #d48a8a 100%)",
+    gradient: "linear-gradient(170deg, #1a0033 0%, #9d00ff 40%, #ff0080 100%)",
     image: "/images/products/product-7.jpg",
     links: [
       { label: "SHOP MEN", href: "/collections/sale" },

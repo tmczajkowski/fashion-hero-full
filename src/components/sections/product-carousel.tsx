@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { products } from "@/data/products";
 import { ProductCard } from "@/components/product-card";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
+import type { Product } from "@/types";
 
 type Tab = "new-arrivals" | "best-sellers";
 
@@ -12,11 +13,33 @@ const tabs: { label: string; value: Tab }[] = [
   { label: "BEST SELLERS", value: "best-sellers" },
 ];
 
+const PINK_RED_PALETTE = [
+  { name: "Hot Pink", hex: "#ff0080" },
+  { name: "Cherry Red", hex: "#ff1744" },
+  { name: "Magenta", hex: "#ff00aa" },
+  { name: "Coral Red", hex: "#ff4458" },
+  { name: "Rose", hex: "#ff4081" },
+  { name: "Raspberry", hex: "#e91e8c" },
+];
+
+function withPinkRedColors(product: Product, index: number): Product {
+  return {
+    ...product,
+    colors: product.colors.map((c, ci) => ({
+      ...c,
+      hex: PINK_RED_PALETTE[(index * 3 + ci) % PINK_RED_PALETTE.length].hex,
+      name: PINK_RED_PALETTE[(index * 3 + ci) % PINK_RED_PALETTE.length].name,
+    })),
+  };
+}
+
 export function ProductCarousel() {
   const [activeTab, setActiveTab] = useState<Tab>("new-arrivals");
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const filtered = products.filter((p) => p.collections.includes(activeTab));
+  const filtered = products
+    .filter((p) => p.collections.includes(activeTab))
+    .map((p, i) => withPinkRedColors(p, i));
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;

@@ -7,9 +7,9 @@ import { heroSlides } from "@/data/products";
 import { PauseIcon, PlayIcon } from "@/components/icons";
 
 const slideGradients = [
-  "linear-gradient(135deg, #c4b59a 0%, #8a7d6b 40%, #5c6b4f 100%)",
-  "linear-gradient(160deg, #2a3a5c 0%, #4a6fa5 50%, #8aabcf 100%)",
-  "linear-gradient(145deg, #6b5b4a 0%, #a89279 40%, #d4cfc5 100%)",
+  "linear-gradient(135deg, #ff0080 0%, #9d00ff 60%, #1a0033 100%)",
+  "linear-gradient(160deg, #9d00ff 0%, #ff0080 50%, #39ff14 100%)",
+  "linear-gradient(145deg, #1a0033 0%, #9d00ff 40%, #ff0080 100%)",
 ];
 
 export function HeroCarousel() {
