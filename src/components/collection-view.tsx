@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { FilterSidebar, type GenderFilter, type PriceRange } from "@/components/filter-sidebar";
 import { ProductCard } from "@/components/product-card";
 import { ChevronDownIcon, CloseIcon } from "@/components/icons";
 import type { Product, ShoeType, ShoeMaterial } from "@/types";
 import { getSeller } from "@/data/sellers";
+import { mergeWomensListingWithPromo, type ListingRow } from "@/data/promotions";
 
 type SortOption = "featured" | "price-asc" | "price-desc" | "newest";
 
@@ -19,10 +20,19 @@ const sortLabels: Record<SortOption, string> = {
 interface CollectionViewProps {
   products: Product[];
   collectionName: string;
+  collectionSlug: string;
   initialSellerSlug?: string;
+  /** Promo tag pages `/collections/promo-*`: no badges on cards */
+  suppressProductBadges?: boolean;
 }
 
-export function CollectionView({ products, collectionName, initialSellerSlug }: CollectionViewProps) {
+export function CollectionView({
+  products,
+  collectionName,
+  collectionSlug,
+  initialSellerSlug,
+  suppressProductBadges,
+}: CollectionViewProps) {
   const [gender, setGender] = useState<GenderFilter>("all");
   const [sort, setSort] = useState<SortOption>("featured");
   const [priceRange, setPriceRange] = useState<PriceRange>("all");
@@ -34,6 +44,13 @@ export function CollectionView({ products, collectionName, initialSellerSlug }: 
   );
   const [sortOpen, setSortOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  /** Client-only promo clock (SSR uses organic listing to avoid hydration drift). */
+  const [promoNow, setPromoNow] = useState<number | null>(null);
+  useEffect(() => {
+    setPromoNow(Date.now());
+    const id = window.setInterval(() => setPromoNow(Date.now()), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
 
   const filtered = useMemo(() => {
     let result = products;
@@ -83,6 +100,11 @@ export function CollectionView({ products, collectionName, initialSellerSlug }: 
 
     return result;
   }, [products, gender, sort, priceRange, shoeTypes, materials, sizes, sellerSlugs]);
+
+  const displayRows: ListingRow[] | null = useMemo(() => {
+    if (collectionSlug !== "womens" || !promoNow) return null;
+    return mergeWomensListingWithPromo(filtered, promoNow);
+  }, [collectionSlug, filtered, promoNow]);
 
   const activeFilterCount =
     (gender !== "all" ? 1 : 0) +
@@ -245,8 +267,16 @@ export function CollectionView({ products, collectionName, initialSellerSlug }: 
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-8">
-              {filtered.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {(suppressProductBadges
+                ? filtered.map((product) => ({ product, promoBadgeLabel: null as string | null }))
+                : displayRows ?? filtered.map((product) => ({ product, promoBadgeLabel: null as string | null }))
+              ).map(({ product, promoBadgeLabel }) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  suppressBadges={Boolean(suppressProductBadges)}
+                  promoBadgeLabel={suppressProductBadges ? null : promoBadgeLabel}
+                />
               ))}
             </div>
           )}

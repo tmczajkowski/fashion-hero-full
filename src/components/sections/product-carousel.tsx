@@ -1,22 +1,37 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { products } from "@/data/products";
+import { useEffect, useState, useRef } from "react";
+import {
+  getCarouselCampaign,
+  getCarouselProductsForCampaign,
+} from "@/data/promotions";
 import { ProductCard } from "@/components/product-card";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 
-type Tab = "new-arrivals" | "best-sellers";
-
-const tabs: { label: string; value: Tab }[] = [
-  { label: "NEW ARRIVALS", value: "new-arrivals" },
-  { label: "BEST SELLERS", value: "best-sellers" },
-];
-
+/** Replaces legacy "Our Favorites" tabs — promo carousel per docs/specs/promo/shop-rendering.md */
 export function ProductCarousel() {
-  const [activeTab, setActiveTab] = useState<Tab>("new-arrivals");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [now, setNow] = useState<number | undefined>(undefined);
 
-  const filtered = products.filter((p) => p.collections.includes(activeTab));
+  useEffect(() => {
+    setNow(Date.now());
+    const id = window.setInterval(() => setNow(Date.now()), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const campaign = now !== undefined ? getCarouselCampaign(now) : undefined;
+  const carouselProducts =
+    now !== undefined && campaign
+      ? getCarouselProductsForCampaign(campaign.id, now, { max: 12, maxPerSeller: 4 })
+      : [];
+
+  if (
+    now === undefined ||
+    carouselProducts.length < 4 ||
+    !campaign
+  ) {
+    return null;
+  }
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -29,31 +44,14 @@ export function ProductCarousel() {
 
   return (
     <section className="py-12">
-      {/* Section heading */}
-      <h2 className="text-[40px] font-normal text-charcoal text-center mb-2">
-        Our Favorites
-      </h2>
+      <p className="text-[11px] font-medium uppercase tracking-[0.45em] text-warm-gray text-center mb-2">
+        Promowane
+      </p>
+      <h2 className="text-[40px] font-normal text-charcoal text-center mb-8">{campaign.label}</h2>
 
-      {/* Tab buttons */}
-      <div className="flex justify-center gap-6 mb-8">
-        {tabs.map((tab) => (
-          <button
-            key={tab.value}
-            onClick={() => setActiveTab(tab.value)}
-            className={`text-[12px] font-medium uppercase tracking-[0.5px] pb-1 border-b-2 transition-colors ${
-              activeTab === tab.value
-                ? "border-charcoal text-charcoal"
-                : "border-transparent text-warm-gray hover:text-charcoal"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Scrollable row with nav buttons */}
       <div className="relative px-4 md:px-8 lg:px-12">
         <button
+          type="button"
           onClick={() => scroll("left")}
           className="absolute left-2 top-1/3 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-sm hidden md:flex items-center justify-center"
           aria-label="Scroll left"
@@ -63,18 +61,20 @@ export function ProductCarousel() {
 
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
+          className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2 snap-x snap-mandatory"
         >
-          {filtered.map((product) => (
+          {carouselProducts.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
-              className="min-w-[220px] max-w-[220px] flex-shrink-0"
+              suppressBadges
+              className="min-w-[220px] max-w-[220px] flex-shrink-0 snap-start"
             />
           ))}
         </div>
 
         <button
+          type="button"
           onClick={() => scroll("right")}
           className="absolute right-2 top-1/3 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-sm hidden md:flex items-center justify-center"
           aria-label="Scroll right"

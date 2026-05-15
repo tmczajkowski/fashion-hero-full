@@ -11,6 +11,10 @@ import { getSellerById } from "@/data/sellers";
 interface ProductCardProps {
   product: Product;
   className?: string;
+  /** When true, hides organic + promo badges (Promowane carousel, promo-* collection). */
+  suppressBadges?: boolean;
+  /** Mixed PLP: promo label overrides organic badge — see docs/specs/promo/shop-rendering.md */
+  promoBadgeLabel?: string | null;
 }
 
 /* Each product gets a unique gradient based on its first color hex */
@@ -22,19 +26,24 @@ function hasRealImage(src: string): boolean {
   return src.startsWith("/images/");
 }
 
-export function ProductCard({ product, className }: ProductCardProps) {
+export function ProductCard({ product, className, suppressBadges = false, promoBadgeLabel }: ProductCardProps) {
   const firstColor = product.colors[0];
   const { openQuickView } = useQuickView();
   const seller = getSellerById(product.sellerId);
-  const badgeLabel = product.badge === "new"
-    ? "NEW"
-    : product.badge === "new-color"
-    ? "NEW COLOR"
-    : product.badge === "bestseller"
-    ? "BESTSELLER"
-    : product.badge === "sale"
-    ? "SALE"
-    : null;
+  let badgeLabel: string | null = null;
+  if (!suppressBadges) {
+    if (promoBadgeLabel) {
+      badgeLabel = promoBadgeLabel;
+    } else if (product.badge === "new") {
+      badgeLabel = "NEW";
+    } else if (product.badge === "new-color") {
+      badgeLabel = "NEW COLOR";
+    } else if (product.badge === "bestseller") {
+      badgeLabel = "BESTSELLER";
+    } else if (product.badge === "sale") {
+      badgeLabel = "SALE";
+    }
+  }
 
   const imageSrc = firstColor.image;
   const showImage = hasRealImage(imageSrc);
