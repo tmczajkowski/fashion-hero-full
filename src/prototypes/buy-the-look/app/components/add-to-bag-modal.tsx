@@ -1,12 +1,18 @@
 import { X, Check } from 'lucide-react';
 import { useState } from 'react';
 import posthog from 'posthog-js';
+import type { StaticImageData } from 'next/image';
+
+function imgSrc(image: string | StaticImageData | undefined): string {
+  if (!image) return '';
+  return typeof image === 'string' ? image : image.src;
+}
 
 interface StylingProduct {
   id: string;
   name: string;
   price: string;
-  image: string;
+  image: string | StaticImageData;
   inStock: boolean;
   colors: Array<{ id: string; name: string; hex: string }>;
   sizes: string[];
@@ -21,11 +27,11 @@ interface AddToBagModalProps {
   isOpen: boolean;
   onClose: () => void;
   productName: string;
-  productImage: string;
+  productImage: string | StaticImageData;
   styling: Styling | null;
   onAddStylingProduct: (productId: string, color: string, size: string) => void;
   onGoToCheckout: () => void;
-  outfitImage?: string;
+  outfitImage?: string | StaticImageData;
 }
 
 export function AddToBagModal({
@@ -68,7 +74,7 @@ export function AddToBagModal({
           <div className="px-6 py-4 border-b">
             <div className="flex gap-4">
               <div className="w-20 h-20 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-                <img src={productImage} alt={productName} className="w-full h-full object-cover" />
+                <img src={imgSrc(productImage)} alt={productName} className="w-full h-full object-cover" />
               </div>
               <div className="flex-1">
                 <h3 className="font-medium">{productName}</h3>
@@ -85,7 +91,7 @@ export function AddToBagModal({
                 {/* Full Outfit Photo */}
                 <div className="bg-white border rounded-lg overflow-hidden h-full">
                   <img
-                    src={outfitImage || 'https://images.unsplash.com/photo-1611043481649-3dd586f37e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080'}
+                    src={imgSrc(outfitImage) || 'https://images.unsplash.com/photo-1611043481649-3dd586f37e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080'}
                     alt="Full outfit"
                     className="w-full h-full object-cover block"
                   />
@@ -95,7 +101,7 @@ export function AddToBagModal({
                 {availableProducts.map((product) => (
                   <div key={product.id} className="bg-white border rounded-lg overflow-hidden">
                     <div className="aspect-square">
-                      <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                      <img src={imgSrc(product.image)} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="p-3 space-y-3">
                       <div>
@@ -175,7 +181,7 @@ function QuickViewModal({ product, onClose, onAddToCart }: QuickViewModalProps) 
         <div className="grid md:grid-cols-2">
           {/* Image */}
           <div className="bg-gray-100">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover aspect-square" />
+                            <img src={imgSrc(product.image)} alt={product.name} className="w-full h-full object-cover aspect-square" />
           </div>
 
           {/* Details */}
