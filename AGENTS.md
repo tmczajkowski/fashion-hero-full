@@ -55,6 +55,17 @@ docs/
 scripts/            # Asset download scripts
 ```
 
+## src/prototypes — Sandbox (NEVER touch for main build)
+
+`src/prototypes/` is a **standalone sandbox** for building and testing new features. It has its own dependencies, its own component copies, and its own tooling — completely separate from the main Next.js app.
+
+**Rules — non-negotiable:**
+- `src/prototypes` MUST remain in the `exclude` array in `tsconfig.json`. Never remove it.
+- Never install packages just to satisfy imports inside `src/prototypes/`.
+- Never fix TypeScript errors inside `src/prototypes/` to make the main build pass — those errors are irrelevant to the main app.
+- When diagnosing Vercel build failures or type errors, ignore `src/prototypes/` entirely.
+- Prototypes are not deployed as part of the main app.
+
 ## MOST IMPORTANT NOTES
 - When launching Claude Code agent teams, ALWAYS have each teammate work in their own worktree branch and merge everyone's work at the end, resolving any merge conflicts smartly since you are basically serving the orchestrator role and have full context to our goals, work given, work achieved, and desired outcomes.
 
