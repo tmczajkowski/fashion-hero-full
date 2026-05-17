@@ -152,7 +152,7 @@ export function BuyTheLookBox({
 
   return (
     <>
-      <section className="mb-16">
+      <section className="mt-12 mb-16">
         <div className="mb-6">
           <h3 className="text-xl">Buy the look</h3>
         </div>
