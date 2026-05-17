@@ -58,8 +58,8 @@ export default async function ProductPage({ params }: PageProps) {
         <ProductDetailsAccordion product={product} />
       </div>
 
-      {/* Buy the look — visible only for Cloud Runner */}
-      {slug === "cloud-runner" && <BuyTheLookSection />}
+      {/* Buy the look — visible only for Trail Pacer */}
+      {slug === "trail-pacer" && <BuyTheLookSection />}
 
       {/* Related products */}
       <RelatedProducts products={related} />
