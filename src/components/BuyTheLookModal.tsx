@@ -12,6 +12,7 @@ export interface BuyTheLookProduct {
   inStock: boolean;
   colors: Array<{ id: string; name: string; hex: string }>;
   sizes: string[];
+  slug?: string;
 }
 
 export interface BuyTheLookStyling {

@@ -13,6 +13,7 @@ const DEMO_STYLING: BuyTheLookStyling = {
       price: "899 zł",
       image: "/images/ochnik-leather-jacket.png",
       inStock: true,
+      slug: "wrap-dress",
       colors: [
         { id: "black", name: "Black", hex: "#1a1a1a" },
       ],
@@ -22,8 +23,9 @@ const DEMO_STYLING: BuyTheLookStyling = {
       id: "look-2",
       name: "Levi's Wool Hat",
       price: "129 zł",
-      image: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+      image: "/images/Levis wool hat.png",
       inStock: true,
+      slug: "wool-scarf-womens",
       colors: [
         { id: "pink", name: "Pink", hex: "#e8a0a0" },
         { id: "black", name: "Black", hex: "#1a1a1a" },

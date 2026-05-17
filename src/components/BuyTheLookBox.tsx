@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import posthog from "posthog-js";
 import type { BuyTheLookProduct, BuyTheLookStyling } from "./BuyTheLookModal";
@@ -212,15 +213,31 @@ export function BuyTheLookBox({
               className="bg-white rounded-lg overflow-hidden border border-gray-100"
             >
               <div className="aspect-square">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
+                {product.slug ? (
+                  <Link href={`/products/${product.slug}`}>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover hover:opacity-90 transition-opacity cursor-pointer"
+                    />
+                  </Link>
+                ) : (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
               <div className="p-3 space-y-3">
                 <div>
-                  <h4 className="text-sm mb-1">{product.name}</h4>
+                  {product.slug ? (
+                    <Link href={`/products/${product.slug}`} className="hover:underline">
+                      <h4 className="text-sm mb-1">{product.name}</h4>
+                    </Link>
+                  ) : (
+                    <h4 className="text-sm mb-1">{product.name}</h4>
+                  )}
                   <p className="text-sm">{product.price}</p>
                 </div>
                 <button
