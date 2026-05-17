@@ -6,6 +6,7 @@ import { ProductInfo } from "@/components/product-info";
 import { ProductDetailsAccordion } from "@/components/product-details-accordion";
 import { RelatedProducts } from "@/components/related-products";
 import { RecentlyViewedSection } from "./recently-viewed-section";
+import { BuyTheLookSection } from "./buy-the-look-section";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -56,6 +57,9 @@ export default async function ProductPage({ params }: PageProps) {
       <div className="mt-12 max-w-2xl">
         <ProductDetailsAccordion product={product} />
       </div>
+
+      {/* Buy the look — visible only for Cloud Runner */}
+      {slug === "cloud-runner" && <BuyTheLookSection />}
 
       {/* Related products */}
       <RelatedProducts products={related} />
