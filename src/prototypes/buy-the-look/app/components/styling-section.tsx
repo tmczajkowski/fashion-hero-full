@@ -1,12 +1,13 @@
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useState } from 'react';
 import posthog from 'posthog-js';
+import type { StaticImageData } from 'next/image';
 
 interface StylingProduct {
   id: string;
   name: string;
   price: string;
-  image: string;
+  image: string | StaticImageData;
   inStock: boolean;
   colors: Array<{ id: string; name: string; hex: string }>;
   sizes: string[];
@@ -23,6 +24,10 @@ interface StylingSectionProps {
   onRate: (stylingId: string, rating: 'positive' | 'negative') => void;
   userRating?: 'positive' | 'negative';
   outfitImage?: string;
+}
+
+function imgSrc(image: string | StaticImageData): string {
+  return typeof image === 'string' ? image : image.src;
 }
 
 export function StylingSection({ styling, onAddToCart, onRate, userRating, outfitImage }: StylingSectionProps) {
@@ -93,7 +98,7 @@ export function StylingSection({ styling, onAddToCart, onRate, userRating, outfi
           {availableProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-lg overflow-hidden">
               <div className="aspect-square">
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                <img src={imgSrc(product.image)} alt={product.name} className="w-full h-full object-cover" />
               </div>
               <div className="p-3 space-y-3">
                 <div>
@@ -153,7 +158,7 @@ function QuickViewModal({ product, onClose, onAddToCart }: QuickViewModalProps) 
         <div className="grid md:grid-cols-2">
           {/* Image */}
           <div className="bg-gray-100">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover aspect-square" />
+            <img src={imgSrc(product.image)} alt={product.name} className="w-full h-full object-cover aspect-square" />
           </div>
 
           {/* Details */}
