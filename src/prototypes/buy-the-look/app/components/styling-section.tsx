@@ -23,10 +23,11 @@ interface StylingSectionProps {
   onAddToCart: (productId: string, color: string, size: string) => void;
   onRate: (stylingId: string, rating: 'positive' | 'negative') => void;
   userRating?: 'positive' | 'negative';
-  outfitImage?: string;
+  outfitImage?: string | StaticImageData;
 }
 
-function imgSrc(image: string | StaticImageData): string {
+function imgSrc(image: string | StaticImageData | undefined): string {
+  if (!image) return '';
   return typeof image === 'string' ? image : image.src;
 }
 
@@ -58,7 +59,7 @@ export function StylingSection({ styling, onAddToCart, onRate, userRating, outfi
           <div className="bg-white rounded-lg overflow-hidden">
             <div className="aspect-square">
               <img
-                src={outfitImage || 'https://images.unsplash.com/photo-1611043481649-3dd586f37e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080'}
+                src={imgSrc(outfitImage) || 'https://images.unsplash.com/photo-1611043481649-3dd586f37e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080'}
                 alt="Pełna stylizacja"
                 className="w-full h-full object-cover"
               />
