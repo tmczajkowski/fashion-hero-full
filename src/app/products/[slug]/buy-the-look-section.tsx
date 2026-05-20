@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useFeatureFlagEnabled } from "posthog-js/react";
+import { useState, useEffect } from "react";
+import { usePostHog } from "posthog-js/react";
 import { BuyTheLookBox } from "@/components/BuyTheLookBox";
 import type { BuyTheLookStyling } from "@/components/BuyTheLookModal";
 
@@ -40,11 +40,18 @@ const DEMO_STYLING: BuyTheLookStyling = {
 const OUTFIT_IMAGE = "/images/buy-the-look-outfit.png";
 
 export function BuyTheLookSection() {
-  const isEnabled = useFeatureFlagEnabled("buy_the_look_enabled");
+  const posthog = usePostHog();
+  const [isTest, setIsTest] = useState(false);
   const [userRating, setUserRating] = useState<"positive" | "negative" | undefined>();
 
-  if (isEnabled === undefined) return null;
-  if (isEnabled === false) return null;
+  useEffect(() => {
+    if (!posthog) return;
+    const check = () => setIsTest(posthog.getFeatureFlag("buy_the_look_enabled") === "test");
+    check();
+    return posthog.onFeatureFlags(check);
+  }, [posthog]);
+
+  if (!isTest) return null;
 
   const handleAddToCart = (productId: string, color: string, size: string) => {
     console.log("Add to cart:", { productId, color, size });
