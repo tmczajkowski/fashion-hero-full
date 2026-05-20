@@ -43,7 +43,7 @@ export function BuyTheLookSection() {
   const isEnabled = useFeatureFlagEnabled("buy_the_look_enabled");
   const [userRating, setUserRating] = useState<"positive" | "negative" | undefined>();
 
-  if (!isEnabled) return null;
+  if (isEnabled === false) return null;
 
   const handleAddToCart = (productId: string, color: string, size: string) => {
     console.log("Add to cart:", { productId, color, size });
