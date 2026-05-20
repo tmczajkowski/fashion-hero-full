@@ -47,8 +47,8 @@ export function BuyTheLookSection() {
   useEffect(() => {
     if (!posthog) return;
     const check = () => setIsTest(posthog.getFeatureFlag("buy_the_look_enabled") === "test");
-    check();
-    return posthog.onFeatureFlags(check);
+    posthog.onFeatureFlags(check);
+    posthog.reloadFeatureFlags();
   }, [posthog]);
 
   if (!isTest) return null;
