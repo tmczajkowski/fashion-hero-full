@@ -15,6 +15,10 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       api_host: host,
       person_profiles: "always",
       capture_pageview: false, // handled manually via Next.js router
+      loaded: (ph) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (window as any).__posthog = ph;
+      },
     });
   }, []);
 
